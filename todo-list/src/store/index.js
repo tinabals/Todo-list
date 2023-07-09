@@ -8,11 +8,15 @@ const store = createStore({
             todos : [
                 {
                     id : 1,
-                    todo : 'Read a book'
+                    todo : 'Read a book',
+                    isDone : false,
+                    postpone : false
                 },
                 {
                     id : 2,
-                    todo : 'Watch a movie'
+                    todo : 'Watch a movie',
+                    isDone : false,
+                    postpone : false
                 }
             ]
         }
@@ -24,7 +28,15 @@ const store = createStore({
       deleteTodo(state, id) {
         
           state.todos = state.todos.filter(todo => todo.id !== id)
-
+      },
+      updateTodo(state, payload){
+        state.todos = state.todos.find(todo => {
+            todo.id  === payload.id
+            if(todo){
+            todo.isDone = payload.isDone
+            todo.postpone = payload.postpone
+            }
+        })
       }
     },
     actions : {
@@ -37,6 +49,9 @@ const store = createStore({
         },
         deleteTodo(context, id){
             context.commit('deleteTodo', id)
+        },
+        updateTodo(context, payload){
+           context.commit('updateTodo', payload)
         }
     },
     getters : {
