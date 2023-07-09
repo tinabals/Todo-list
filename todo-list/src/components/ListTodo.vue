@@ -1,6 +1,6 @@
 <template>
   <base-card>
-    <base-card v-for="todo in todos" :key="todo.id" class="todos">
+    <base-card v-for="todo in todos" :key="todo.id" class="todos" :class="{lineThrough : todo.isDone === true}">
         {{ todo.todo }}
         <div >
             <input type="checkbox" value="done" v-model="todo.isDone" @change="updateTodo(todo)" />
@@ -22,7 +22,7 @@ export default {
     props : ['todos'],
     data(){
        return {
-       isDone : false
+    
        }
     },
     methods : {
@@ -31,7 +31,14 @@ export default {
            this.$emit('delete-todo', id )
         } ,
         updateTodo(todo){
-            console.log(todo)
+            const updateTodoData = 
+            {
+                id : todo.id,
+                todo : todo.todo,
+                isDone : todo.isDone,
+                postpone : todo.postpone
+            }
+            this.$store.dispatch('updateTodo', updateTodoData)
             
         }
     },
@@ -47,6 +54,9 @@ export default {
     align-items: center;
    
 
+}
+.lineThrough{
+    text-decoration: line-through;
 }
 
 </style>

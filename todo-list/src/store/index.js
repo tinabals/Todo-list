@@ -29,16 +29,24 @@ const store = createStore({
         
           state.todos = state.todos.filter(todo => todo.id !== id)
       },
-      updateTodo(state, payload){
-        state.todos = state.todos.find(todo => {
-            todo.id  === payload.id
-            if(todo){
-            todo.isDone = payload.isDone
-            todo.postpone = payload.postpone
-            }
-        })
-      }
-    },
+    //   updateTodo(state, payload){
+    //    const todo = state.todos.find(todo => 
+    //         todo.id  === payload.id)
+    //         if(todo){
+    //         todo.id = payload.id
+    //         todo.todo = payload.todo    
+    //         todo.isDone = payload.isDone
+    //         todo.postpone = payload.postpone
+    //         }
+    updateTodo(state, payload){
+    state.todos.forEach(todo => {
+        if (todo.id === payload.id) {
+          todo.isDone = payload.isDone;
+          todo.postpone = payload.postpone;
+        }
+      
+    })
+    }},
     actions : {
         addTodo(context, payload){
             const todo = {
